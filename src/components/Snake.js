@@ -54,16 +54,21 @@ function Snake() {
     setIsStarted(false);
   };
 
-  const generateFood = useCallback(() => {
+  const generateFood = () => {
     let newFood;
+    const isOnSnake = (pos) => {
+      return snake.some(segment => segment.x === pos.x && segment.y === pos.y);
+    };
+
     do {
       newFood = {
         x: Math.floor(Math.random() * GRID_SIZE),
         y: Math.floor(Math.random() * GRID_SIZE)
       };
-    } while (snake.some(segment => segment.x === newFood.x && segment.y === newFood.y));
+    } while (isOnSnake(newFood));
+
     setFood(newFood);
-  }, [snake]);
+  };
 
   const moveSnake = useCallback(() => {
     if (!isStarted || gameOver) return;

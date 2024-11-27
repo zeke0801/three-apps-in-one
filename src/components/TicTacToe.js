@@ -114,7 +114,7 @@ function TicTacToe() {
         setXIsNext(true);
       }
     }
-  }, [board, xIsNext, gameMode]);
+  }, [board, xIsNext, gameMode, findBestMove]);
 
   useEffect(() => {
     if (gameMode === 'ai' && !xIsNext) {
