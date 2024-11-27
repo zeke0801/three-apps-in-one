@@ -1,11 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Calculator from './components/Calculator';
 import Snake from './components/Snake';
 import TicTacToe from './components/TicTacToe';
 import './App.css';
+import calcIcon from './tab-icon/calc.png';
+import snakeIcon from './tab-icon/snake.png';
+import tictactoeIcon from './tab-icon/tictactoe.png';
 
 function App() {
+  const setFavicon = (iconPath, pageTitle = 'ReactJs Mini Apps') => {
+    const favicon = document.querySelector('link[rel="icon"]');
+    if (favicon) {
+      favicon.href = iconPath;
+    } else {
+      const newFavicon = document.createElement('link');
+      newFavicon.rel = 'icon';
+      newFavicon.href = iconPath;
+      document.head.appendChild(newFavicon);
+    }
+    document.title = pageTitle;
+  };
+
   return (
     <Router>
       <div className="App">
@@ -33,10 +49,30 @@ function App() {
         </div>
         <div className="content">
           <Routes>
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/calculator" element={<Calculator />} />
-            <Route path="/snake" element={<Snake />} />
-            <Route path="/tictactoe" element={<TicTacToe />} />
+            <Route path="/" element={
+              <div>
+                {setFavicon(calcIcon, 'Home')}
+                <LandingPage />
+              </div>
+            } />
+            <Route path="/calculator" element={
+              <div>
+                {setFavicon(calcIcon, 'Calculator')}
+                <Calculator />
+              </div>
+            } />
+            <Route path="/snake" element={
+              <div>
+                {setFavicon(snakeIcon, 'Snake Game')}
+                <Snake />
+              </div>
+            } />
+            <Route path="/tictactoe" element={
+              <div>
+                {setFavicon(tictactoeIcon, 'Tic Tac Toe')}
+                <TicTacToe />
+              </div>
+            } />
           </Routes>
         </div>
       </div>
@@ -45,41 +81,14 @@ function App() {
 }
 
 function LandingPage() {
-  const [showMobileWarning, setShowMobileWarning] = useState(false);
-  const navigate = useNavigate();
-
-  const isMobileDevice = () => {
-    return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
-  };
-
-  const handleSnakeClick = (e) => {
-    if (isMobileDevice()) {
-      e.preventDefault();
-      setShowMobileWarning(true);
-    }
-  };
-
   return (
     <div className="landing-container">
-      <h1>mini games collection</h1>
+      <h1>React JS <br/> mini apps collection</h1>
       <div className="button-container">
         <Link to="/calculator" className="app-button">Calculator</Link>
-        <Link to="/snake" className="app-button" onClick={handleSnakeClick}>
-          Snake Game <br/>(Desktop Only)
-        </Link>
+        <Link to="/snake" className="app-button">Snake Game<br />Desktop Recommended</Link>
         <Link to="/tictactoe" className="app-button">Tic Tac Toe</Link>
       </div>
-      {showMobileWarning && (
-        <div className="modal-overlay" onClick={() => setShowMobileWarning(false)}>
-          <div className="modal-content" onClick={e => e.stopPropagation()}>
-            <h2>Desktop Only Game</h2>
-            <p>Sorry, the Snake game is only available on desktop devices.</p>
-            <button className="modal-button" onClick={() => setShowMobileWarning(false)}>
-              Got it
-            </button>
-          </div>
-        </div>
-      )}
       <footer className="footer">
         made by zeke 2024
       </footer>

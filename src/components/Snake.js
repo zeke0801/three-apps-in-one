@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import './Snake.css';
 
 const GRID_SIZE = 20;
@@ -10,7 +10,6 @@ const INITIAL_SPEED = 150;
 const SPEED_INCREASE = 0.05; // 5% speed increase per point
 
 function Snake() {
-  const navigate = useNavigate();
   const [snake, setSnake] = useState(INITIAL_SNAKE);
   const [food, setFood] = useState(INITIAL_FOOD);
   const [direction, setDirection] = useState(INITIAL_DIRECTION);
@@ -26,22 +25,10 @@ function Snake() {
   const [showNameInput, setShowNameInput] = useState(true);
   const [isDarkened, setIsDarkened] = useState(false);
   const [darkenDuration, setDarkenDuration] = useState(1);
-  const [showMobileWarning, setShowMobileWarning] = useState(false);
-
-  const isMobileDevice = () => {
-    return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
-  };
 
   useEffect(() => {
-    if (isMobileDevice()) {
-      setShowMobileWarning(true);
-      setTimeout(() => {
-        navigate('/');
-      }, 2000);
-      return;
-    }
     localStorage.setItem('snakeHighScores', JSON.stringify(highScores));
-  }, [highScores, navigate]);
+  }, [highScores]);
 
   const saveScore = () => {
     if (!playerName.trim()) return;
@@ -211,16 +198,6 @@ function Snake() {
     setPlayerName('');
     setGameMode('');
   };
-
-  if (showMobileWarning) {
-    return (
-      <div className="mobile-warning">
-        <h2>Desktop Only Game</h2>
-        <p>Sorry, the Snake game is only available on desktop devices.</p>
-        <p>Redirecting to home page...</p>
-      </div>
-    );
-  }
 
   return (
     <div className="snake-container">
