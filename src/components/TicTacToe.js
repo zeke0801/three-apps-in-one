@@ -19,7 +19,7 @@ function TicTacToe() {
     localStorage.setItem('tictactoeScores', JSON.stringify(scores));
   }, [scores]);
 
-  const calculateWinner = (squares) => {
+  const calculateWinner = useCallback((squares) => {
     const lines = [
       [0, 1, 2],
       [3, 4, 5],
@@ -38,16 +38,16 @@ function TicTacToe() {
       }
     }
     return null;
-  };
+  }, []);
 
-  const getEmptySquares = (squares) => {
+  const getEmptySquares = useCallback((squares) => {
     return squares.reduce((empty, square, index) => {
       if (!square) empty.push(index);
       return empty;
     }, []);
-  };
+  }, []);
 
-  const minimax = (squares, depth, isMaximizing, alpha, beta) => {
+  const minimax = useCallback((squares, depth, isMaximizing, alpha, beta) => {
     const winner = calculateWinner(squares);
     
     // Terminal states
@@ -82,7 +82,7 @@ function TicTacToe() {
       }
       return minEval;
     }
-  };
+  }, [calculateWinner, getEmptySquares]);
 
   const findBestMove = useCallback((squares) => {
     let bestMove = -1;
@@ -102,7 +102,7 @@ function TicTacToe() {
     }
     
     return bestMove;
-  }, []);
+  }, [minimax]);
 
   const makeAIMove = useCallback(() => {
     if (gameMode === 'ai' && !xIsNext && !calculateWinner(board)) {
@@ -114,7 +114,7 @@ function TicTacToe() {
         setXIsNext(true);
       }
     }
-  }, [board, xIsNext, gameMode, findBestMove]);
+  }, [board, xIsNext, gameMode, findBestMove, calculateWinner]);
 
   useEffect(() => {
     if (gameMode === 'ai' && !xIsNext) {
@@ -124,22 +124,22 @@ function TicTacToe() {
     }
   }, [xIsNext, gameMode, makeAIMove]);
 
-  const handleClick = (i) => {
+  const handleClick = useCallback((i) => {
     const boardCopy = [...board];
     if (calculateWinner(boardCopy) || boardCopy[i] || (!xIsNext && gameMode === 'ai')) return;
     
     boardCopy[i] = xIsNext ? 'X' : 'O';
     setBoard(boardCopy);
     setXIsNext(!xIsNext);
-  };
+  }, [board, xIsNext, gameMode, calculateWinner]);
 
-  const handleGameSetup = (e) => {
+  const handleGameSetup = useCallback((e) => {
     e.preventDefault();
     if (!gameMode || !player1Name || (gameMode === 'turns' && !player2Name)) return;
     setShowSetup(false);
-  };
+  }, [gameMode, player1Name, player2Name]);
 
-  const getRandomRobotName = () => {
+  const getRandomRobotName = useCallback(() => {
     const prefixes = ['ROBO', 'CYBER', 'MECHA', 'TECH', 'BOT', 'AI', 'QUANTUM', 'BINARY', 'DIGITAL', 'NEURAL'];
     const suffixes = ['TRON', 'MIND', 'CORE', 'UNIT', 'MATRIX', 'NET', 'BYTE', 'CIRCUIT', 'FLEX', 'WAVE'];
     const numbers = Math.floor(Math.random() * 999).toString().padStart(3, '0');
@@ -148,7 +148,7 @@ function TicTacToe() {
     const suffix = suffixes[Math.floor(Math.random() * suffixes.length)];
     
     return `${prefix}-${suffix}-${numbers}`;
-  };
+  }, []);
 
   useEffect(() => {
     const winner = calculateWinner(board);
@@ -168,15 +168,15 @@ function TicTacToe() {
       setScores(updatedScores);
       localStorage.setItem('tictactoeScores', JSON.stringify(updatedScores));
     }
-  }, [board, gameMode, player1Name, player2Name, scores, gameEnded]);
+  }, [board, gameMode, player1Name, player2Name, scores, gameEnded, calculateWinner, getEmptySquares, getRandomRobotName]);
 
-  const resetGame = () => {
+  const resetGame = useCallback(() => {
     setBoard(Array(9).fill(null));
     setXIsNext(true);
     setGameEnded(false);
-  };
+  }, []);
 
-  const renderSquare = (i) => {
+  const renderSquare = useCallback((i) => {
     return (
       <button 
         className="square" 
@@ -187,7 +187,7 @@ function TicTacToe() {
         {board[i]}
       </button>
     );
-  };
+  }, [board, handleClick]);
 
   const winner = calculateWinner(board);
   const isDraw = !winner && board.every(square => square !== null);
