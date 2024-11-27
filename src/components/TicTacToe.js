@@ -84,7 +84,7 @@ function TicTacToe() {
     }
   };
 
-  const findBestMove = (squares) => {
+  const findBestMove = useCallback((squares) => {
     let bestMove = -1;
     let bestValue = -Infinity;
     
@@ -102,7 +102,7 @@ function TicTacToe() {
     }
     
     return bestMove;
-  };
+  }, []);
 
   const makeAIMove = useCallback(() => {
     if (gameMode === 'ai' && !xIsNext && !calculateWinner(board)) {

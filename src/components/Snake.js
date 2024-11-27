@@ -54,7 +54,7 @@ function Snake() {
     setIsStarted(false);
   };
 
-  const generateFood = () => {
+  const generateFood = useCallback(() => {
     let newFood;
     const isOnSnake = (pos) => {
       return snake.some(segment => segment.x === pos.x && segment.y === pos.y);
@@ -68,7 +68,7 @@ function Snake() {
     } while (isOnSnake(newFood));
 
     setFood(newFood);
-  };
+  }, [snake]);
 
   const moveSnake = useCallback(() => {
     if (!isStarted || gameOver) return;
