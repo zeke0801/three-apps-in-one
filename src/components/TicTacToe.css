@@ -1,0 +1,249 @@
+.tictactoe-container {
+  display: flex;
+  height: 100vh;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+}
+
+.game-container {
+  display: flex;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 2rem;
+  align-items: stretch;
+}
+
+.game-setup-form {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 100%;
+  max-width: 500px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.game-modes {
+  display: flex;
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.mode-option {
+  flex: 1;
+  padding: 1.5rem;
+  border: 2px solid #eee;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.mode-option:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.mode-option.selected {
+  border-color: #2196f3;
+  background: rgba(33, 150, 243, 0.1);
+}
+
+.mode-option h3 {
+  margin: 0 0 0.5rem 0;
+  color: #333;
+}
+
+.mode-option p {
+  margin: 0;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.player-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.player-inputs input {
+  padding: 0.8rem 1rem;
+  font-size: 1rem;
+  border: 2px solid #eee;
+  border-radius: 5px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.player-inputs input:focus {
+  border-color: #2196f3;
+}
+
+.game-setup-form button {
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  background: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+  width: 100%;
+}
+
+.game-setup-form button:hover:not(:disabled) {
+  background: #1976d2;
+}
+
+.game-setup-form button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  height: 100%;
+}
+
+.scoreboard {
+  width: 250px;
+  padding: 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  margin: 0;
+  box-shadow: none;
+  background: transparent;
+  border-radius: 0 0 0 10px;
+}
+
+.game-divider {
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, #e0e0e0, transparent);
+  margin: 1rem 0;
+}
+
+.scores-list {
+  flex: 1;
+  overflow-y: auto;
+  margin: 0;
+  padding-right: 0.5rem;
+}
+
+.score-entry {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #eee;
+  gap: 0.75rem;
+}
+
+.game-mode {
+  font-size: 1.2rem;
+  min-width: 24px;
+  text-align: center;
+}
+
+.player-name {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.vs-text {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.game-info {
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #3868e2;
+  font-weight: lighter;
+}
+
+.game-board {
+  display: grid;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.board-row {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.square {
+  width: 100px;
+  height: 100px;
+  background: white;
+  border: 2px solid #eee;
+  border-radius: 8px;
+  font-size: 3rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.square:hover:not(:disabled) {
+  border-color: #2196f3;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.square:disabled {
+  cursor: not-allowed;
+}
+
+.square[disabled][value="X"] {
+  color: #2196f3;
+}
+
+.square[disabled][value="O"] {
+  color: #e53935;
+}
+
+.reset-button {
+  padding: 0.8rem 2rem;
+  font-size: 1rem;
+  background: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.reset-button:hover {
+  background: #1976d2;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.back-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 2rem;
+  color: #666;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.back-button:hover {
+  color: #2196f3;
+}
