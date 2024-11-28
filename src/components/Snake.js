@@ -155,17 +155,21 @@ function Snake() {
       
       if (!isStarted) return;
 
-      switch (e.key) {
-        case 'ArrowUp':
+      switch (e.key.toLowerCase()) {
+        case 'arrowup':
+        case 'w':
           if (direction !== 'DOWN') setDirection('UP');
           break;
-        case 'ArrowDown':
+        case 'arrowdown':
+        case 's':
           if (direction !== 'UP') setDirection('DOWN');
           break;
-        case 'ArrowLeft':
+        case 'arrowleft':
+        case 'a':
           if (direction !== 'RIGHT') setDirection('LEFT');
           break;
-        case 'ArrowRight':
+        case 'arrowright':
+        case 'd':
           if (direction !== 'LEFT') setDirection('RIGHT');
           break;
         default:
@@ -213,14 +217,15 @@ function Snake() {
                 onClick={() => setGameMode('open')}
               >
                 <h3>🌐 Open World</h3>
-                <p>Snake wraps around edges</p>
+                <p>I mean, "Open World"
+                </p>
               </div>
               <div 
                 className={`mode-option ${gameMode === 'contained' ? 'selected' : ''}`}
                 onClick={() => setGameMode('contained')}
               >
                 <h3>📦 Contained</h3>
-                <p>Walls are deadly</p>
+                <p>Walls are deadly, literally.</p>
               </div>
             </div>
             <div className="name-input-container">
